@@ -2,11 +2,11 @@
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
 body {
-	background: #222 url('https://source.unsplash.com/collection/292287/') no-repeat center/cover fixed;
+	background: #fff; 
 	font: 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	animation: fadeIn .75s .75s both ease-in;
 	text-transform: lowercase;
-	color: white;
+	color: black;
     margin: 0;
 }
 div#background {
@@ -21,9 +21,104 @@ div.centerWrapper {
 	left: 25vw;
 	top: 50%;
 }
+h1#greetingTitle {
+		font-size: 3.4em;
+		font-weight: 200;
+		text-align: center;
+		margin: 0 auto;
+		max-width: 512px;
+		padding: 0;
+		text-transform: uppercase;
+}
 div.timeDate div {
 	font-size: xx-large;
 	padding: 0 5px 5px;
+}
+
+#google-search {
+	//width: 600px;
+}
+#reddit-input {
+	margin-top: 5px;
+	width: 84%;
+	display: inline;
+}
+#reddit-submit {
+	margin-top: 5px;
+	display: inline;
+}
+#chan-input {
+	margin-top: 5px;
+	width: 82%;
+}
+#chan-submit {
+	margin-top: 5px;
+}
+#reddit-span {
+	display: inline;
+	float: left;
+	width: 50%;
+}
+#chan-span {
+	display: inline;
+	float: left;
+	width: 50%;
+}
+//.search {
+//	height: 37px;
+//	font-size: 1em;
+//	border-radius: 12px;
+//	border-style: solid;
+//	padding: 0px 0px 0px 10px;
+//	width: 75%;
+//	border-color: #bfbfbf;
+//}
+//.search-buttons {
+//	padding: 7px 10px 7px 12px;
+//	margin: 0;
+//	font-weight: bold;
+//	font-size: 1em;
+//	border: none;
+//	background: #000;
+//	color: #fff;
+//	border-radius: 12px;
+//}
+.google-span {
+	//display: inline-block;
+	overflow: hidden;
+}
+.google-span > * {
+	vertical-align: top;
+	border: 0;
+	margin: 0px -8px 0px 3px;
+	padding: 13px 14px;
+}
+
+.google-span > input[type=text] {
+	width: 150px;
+	border: 1px solid #000;
+	border-right: none;
+	width: 91%;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	font-size: 14px;
+}
+
+.google-span > button {
+	border-left: 1px solid gray;
+	background: #000;
+	border: 1px solid #000;
+	color: white;
+	cursor: pointer;
+	padding: 11px 11px 11px 12px;
+	font-weight: bold;
+	font-size: 1em;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+#google-submit {
+	background: #000;
+	color: #fff;
 }
 div#lastFM { text-align: center; }
 div#lastFM a {

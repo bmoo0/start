@@ -4,15 +4,37 @@
 	<meta charset="utf-8">
 	<title>New Tab</title>
 	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 	<div id="background"></div>
 	<p class="top"><span class="greeting"></span>! <span class="weather"></span><span class="weatherlink right"></span></p>
 	<div class="centerWrapper">
+		<div class="to-fade">
+		<h1 id="greetingTitle"></h1>
 		<div class="timeDate no-transform">
 			<div id="time" class="left"></div>
 			<div id="date" class="right text-right"></div>
 		</div>
+		<form id="google-search">
+			<span class="google-span">
+			<input type="text" class="search" placeholder="Google Search" id="google-input">
+			<button class="search-buttons" id="google-submit">></button>
+			</span>
+		</form>
+		<form id="reddit-search">
+			<span class="google-span" id="reddit-span">
+			<input type="text" class="search" placeholder="Enter Subreddit" id="reddit-input">
+			<button class="search-buttons" id="reddit-submit">></button>
+			</span>
+		</form>
+		<form id="4chan-search">
+			<span class="google-span" id="chan-span">
+			<input type="text" class="search" placeholder="Enter 4chan Board" id="chan-input">
+			<button class="search-buttons" id="chan-submit">></button>
+			</span>
+		</form>
+	</div>
 		<ul class="box">
 			<div class="left">
 				<li><a id="parent1" class="parent" data-key="s" href="javascript:void(0)">Social Media</a>
@@ -20,8 +42,8 @@
 						<li><a class="tab tab1" data-key="f" href="https://facebook.com/">Facebook</a></li>
 						<li><a class="tab tab1" data-key="m" href="https://messenger.com/">Messenger</a></li>
 						<li><a class="tab tab1" data-key="i" href="https://instagram.com/">Instagram</a></li>
-						<li><a class="tab tab1" data-key="t" href="https://tumblr.com/">Tumblr</a></li>
-						<li><a class="tab tab1" data-key="w" href="https://twitter.com/">Twitter</a></li>
+						<li><a class="tab tab1" data-key="w" href="https://tumblr.com/">Tumblr</a></li>
+						<li><a class="tab tab1" data-key="t" href="https://twitter.com/">Twitter</a></li>
 						<li><a class="tab tab1" data-key="g" href="https://inbox.google.com/u/0/">Gmail</a></li>
 					</ul>
 				</li>
@@ -32,14 +54,13 @@
 						<li><a class="tab tab2" data-key="y" href="https://youtube.com/">YouTube</a></li>
 						<li><a class="tab tab2" data-key="c" href="https://soundcloud.com/">SoundCloud</a></li>
 						<li><a class="tab tab2" data-key="s" href="https://play.spotify.com/">Spotify Web Client</a></li>
-						<li><a class="tab tab2" data-key="g" href="https://music.google.com/">Google Play Music</a></li>
 					</ul>
 				</li>
 				<li><a id="parent3" class="parent" data-key="r" href="javascript:void(0)">Reddit</a>
 					<ul class="subMenu">
 						<li><a class="tab tab3" data-key="f" href="https://reddit.com/">Front Page</a></li>
-						<li><a class="tab tab3" data-key="t" href="https://reddit.com/r/trees/">/r/trees</a></li>
-						<li><a class="tab tab3" data-key="s" href="https://reddit.com/r/see/">/r/see</a></li>
+						<li><a class="tab tab3" data-key="c" href="https://reddit.com/r/CopOrNot/">/r/CopOrNot</a></li>
+						<li><a class="tab tab3" data-key="s" href="https://reddit.com/r/streetwear/">/r/streetwear</a></li>
 						<li><a class="tab tab3" data-key="u" href="https://reddit.com/r/unixporn/">/r/unixporn</a></li>
 						<li><a class="tab tab3" data-key="x" href="https://reddit.com/r/startpages/">/r/startpages</a></li>
 						<li><a class="tab tab3" data-key="d" href="https://reddit.com/r/webdev/">/r/webdev</a></li>
@@ -50,9 +71,9 @@
 			<div class="right">
 				<li><a id="parent4" class="parent" data-key="d" href="javascript:void(0)">Design &amp; Dev</a>
 					<ul class="subMenu">
-						<li><a class="tab tab4" data-key="k" href="https://keep.google.com/">Google Keep</a></li>
 						<li><a class="tab tab4" data-key="b" href="https://dribbble.com/">Dribbble</a></li>
-						<li><a class="tab tab4" data-key="p" href="https://unsplash.com/">Unsplash</a></li>
+						<li><a class="tab tab4" data-key="u" href="https://unsplash.com/">Unsplash</a></li>
+						<li><a class="tab tab4" data-key="p" href="https://getpocket.com/a/queue/list/">Pocket</a></li>
 						<li><a class="tab tab4" data-key="g" href="https://github.com/">Github</a></li>
 						<li><a class="tab tab4" data-key="f" href="https://fonts.google.com/">Google Web Fonts</a></li>
 						<li><a class="tab tab4" data-key="c" href="http://caniuse.com/">Can I Use?</a></li>
@@ -60,35 +81,36 @@
 						<li><a class="tab tab4" data-key="m" href="https://developer.mozilla.com/">Mozilla Development Network</a></li>
 					</ul>
 				</li>
-				<li><a id="parent5" class="parent" data-key="o" href="javascript:void(0)">O2DCA</a>
+				<li><a id="parent5" class="parent" data-key="u" href="javascript:void(0)">News</a>
 					<ul class="subMenu">
-						<li><a class="tab tab5" data-key="l" href="http://life.o2dca.com/dashboard">Life</a></li>
-						<li><a class="tab tab5" data-key="d" href="http://life.o2dca.com/projects">Data</a></li>
-						<li><a class="tab tab5" data-key="k" href="http://know.o2dca.com/">Know</a></li>
-						<li><a class="tab tab5" data-key="s" href="http://support.o2dca.com/">Support</a></li>
-						<li><a class="tab tab5" data-key="t" href="https://www.toggl.com/app/timer">Toggl</a></li>
-						<li><a class="tab tab5" data-key="g" href="https://inbox.google.com/u/1/">Gmail</a></li>
+						<li><a class="tab tab5" data-key="h" href="https://news.ycombinator.com/">HackerNews</a></li>
+						<li><a class="tab tab5" data-key="s" href="https://slashdot.org/">Slashdot</a></li>
+						<li><a class="tab tab5" data-key="r" href="http://www.reuters.com/">Reuters</a></li>
+						<li><a class="tab tab5" data-key="b" href="http://www.bbc.com/news">BBC News</a></li>
+						<li><a class="tab tab5" data-key="v" href="https://news.vice.com/">Vice News</a></li>
+						<li><a class="tab tab5" data-key="w" href="https://www.wired.com/">Wired</a></li>
+						<li><a class="tab tab5" data-key="m" href="https://motherboard.vice.com/en_us">Motherboard</a></li>
+						<li><a class="tab tab5" data-key="e" href="http://www.theverge.com/">The Verge</a></li>
 					</ul>
 				</li>
-				<li><a id="parent6" class="parent" data-key="c" href="javascript:void(0)">Comics</a>
+				<li><a id="parent6" class="parent" data-key="c" href="javascript:void(0)">Misc</a>
 					<ul class="subMenu">
 						<li><a class="tab tab6" data-key="x" href="http://xkcd.com/">XKCD</a></li>
-						<li><a class="tab tab6" data-key="p" href="http://potshotcomic.com/">Pot Shot Comic</a></li>
 						<li><a class="tab tab6" data-key="&amp;" href="http://explosm.net/">Cyanide and Happiness</a></li>
-						<li><a class="tab tab6" data-key="n" href="http://powernapcomic.com/">Powernap Comic</a></li>
-						<li><a class="tab tab6" data-key="e" href="http://extrafabulouscomics.com/">Extra Fabulous Comics</a></li>
-						<li><a class="tab tab6" data-key="d" href="http://thedoghousediaries.com/">Doghouse Diaries</a></li>
-						<li><a class="tab tab6" data-key="q" href="http://questionablecontent.net/">Questionable Content</a></li>
-						<li><a class="tab tab6" data-key="s" href="http://smbc-comics.com/">Saturday Morning Breakfast Cereal</a></li>
-						<li><a class="tab tab6" data-key="o" href="http://theoatmeal.com/comics/">The Oatmeal</a></li>
+						<li><a class="tab tab6" data-key="/" href="http://www.27bslash6.com/">27b/6</a></li>
+						<li><a class="tab tab6" data-key="g" href="https://boards.4chan.org/g/">/g/</a></li>
+						<li><a class="tab tab6" data-key="c" href="https://8ch.net/cyber/index.html">/cyber/</a></li>
+						<li><a class="tab tab6" data-key="f" href="https://boards.4chan.org/fa/">/fa/</a></li>
+						<li><a class="tab tab6" data-key="s" href="http://smbc-comics.com/">SMBC</a></li>
 					</ul>
 				</li>
 			</div>
 		</ul>
 		<div class="clear"></div>
+		<!-- I know I don't need this div, but I'm just scared to delete it --!>
 		<div id="lastFM"></div>
 	</div>
-	<p class="bottom"><span class="quote"></span><span class="github right"><a href="https://github.com/pschfr/start">View on GitHub (g)</a></span></p>
+	<!--<p class="bottom"><span class="quote"></span><span class="github right"><a href="https://github.com/pschfr/start">View on GitHub (g)</a></span></p> --!>
 	<script src="jquery.min.js"></script>
 	<script async src="mousetrap.min.js"></script>
 	<script async src="jquery.simpleWeather.min.js"></script>

@@ -8,6 +8,7 @@ function startTime() {
 	var dayNames   = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 	var now   = new Date();
 	var hour  = now.getHours();
+	var greetHour = now.getHours();
 	var mins  = now.getMinutes();
 	var secs  = now.getSeconds();
 	var ampm  = hour >= 12 ? 'PM' : 'AM';
@@ -22,6 +23,20 @@ function startTime() {
 	document.getElementById('time').innerHTML = hour + ':' + mins + ':' + secs + ' ' + ampm;
 	document.getElementById('date').innerHTML = day + ' ' + month + ' ' + date + ', ' + year;
 	var t = setTimeout(startTime, 500);
+
+	// Change greeting based on time of day
+	if(greetHour < 12) {
+		// good morning
+		document.getElementById('greetingTitle').innerHTML = "おはようございます";
+	}
+	else if(greetHour >= 12 && greetHour <= 17) {
+	//	// good afternoon
+		document.getElementById('greetingTitle').innerHTML = "こんにちは" ;
+	}
+	else if(greetHour > 17 && greetHour <= 24) {
+	//	// good evening
+		document.getElementById('greetingTitle').innerHTML = "こんばんは";
+	}
 }
 // Gets weather for requested location, appends to page
 function getWeather(location) {
@@ -50,16 +65,19 @@ function loadStuff() {
 	var randNumQuotes = Math.floor((Math.random() * quotes.length));
 	$('.quote').html('&ldquo;' + quotes[randNumQuotes] + '&rdquo; &mdash; ' + '<cite><small>' + quoted[randNumQuotes] + '</small></cite>');
 	geolocWeather();
-	lastFM_request();
+	//lastFM_request();
 }
 // Initializes keyboard nav
 function bindMousetraps() {
 	$.each($('.parent'), function(i, val) {
 		Mousetrap.bind($(val).attr('data-key'), function(e) {
-			$('a#' + $(val).attr('id')).toggleClass('active').next().slideToggle(150);
-			$.each($(val).parent().find('.tab'), function(i, val) {
-				Mousetrap.bind($(val).attr('data-key'), function(e) {
-					window.location.href = $(val).attr('href');
+			// Fade out header when menu item is opened
+			$(".to-fade").fadeOut(400, function() {
+				$('a#' + $(val).attr('id')).toggleClass('active').next().slideToggle(150);
+				$.each($(val).parent().find('.tab'), function (i, val) {
+					Mousetrap.bind($(val).attr('data-key'), function (e) {
+						window.location.href = $(val).attr('href');
+					});
 				});
 			});
 			Mousetrap.bind($(val).attr('data-key'), function(e) {
@@ -70,11 +88,12 @@ function bindMousetraps() {
 	// Resets on ESC
 	Mousetrap.bind('esc', function(e) {
 		resetMousetraps();
+		$(".to-fade").fadeIn(400);
 	});
 	// Resets and refreshes with spacebar, TODO: change background image too
 	Mousetrap.bind('space', function(e) {
 		resetMousetraps();
-		lastFM_request();
+		$(".to-fade").fadeIn(400);
 		geolocWeather();
 
 		// This technically works, but the browser caches the response, keeping the same image :(
@@ -84,9 +103,9 @@ function bindMousetraps() {
 	Mousetrap.bind('w', function(e) {
 		window.location.href = $('.weatherlink').children().attr('href');
 	});
-	Mousetrap.bind('g', function(e) {
-		window.location.href = $('.github').children().attr('href');
-	});
+	//Mousetrap.bind('g', function(e) {
+	//	window.location.href = $('.github').children().attr('href');
+	//});
 }
 // Closes cells, rebinds keyboard shortcuts
 function resetMousetraps() {
@@ -95,48 +114,21 @@ function resetMousetraps() {
 	Mousetrap.reset();
 	bindMousetraps();
 }
-// Connects to Last.FM, retrives most recent song
-function lastFM_request() {
-	var method    = 'user.getrecenttracks';
-	var username  = 'paul_r_schaefer';
-	var API_key   = '0f680404e39c821cac34008cc4d803db';
-	var number    = '1'; // Increase this to increase number of tracks
-	var lastFMurl = 'https://ws.audioscrobbler.com/2.0/?method=' + method + '&user=' + username + '&api_key=' + API_key + '&limit=' + number + '&format=json';
-	var element   = document.getElementById('lastFM');
-	var xmlhttp   = new XMLHttpRequest();
 
-	xmlhttp.open('GET', lastFMurl, true); // begins request to Last.FM
-
-	xmlhttp.onreadystatechange = function() {
-	    if (xmlhttp.readyState == 4) {			              // When Last.FM is ready,
-	        if(xmlhttp.status == 200) {			              // And we have text,
-	            var obj = JSON.parse(xmlhttp.responseText);   // we parse the JSON,
-				var track      = obj.recenttracks.track[0];   // reference the first track
-				var artistName = track.artist['\#text'];      // fetch data from the track
-				var albumName  = track.album['\#text'];
-				var songName   = track.name;
-				var songURL    = track.url;
-				var imgURL     = track.image.slice(-1)[0]['\#text'];
-				var userLink   = '<a href="http://www.last.fm/user/' + username + '" title="' + obj.recenttracks['\@attr'].total + ' scrobbles by ' + username + '">';
-
-				element.innerHTML = ''; // removes any existing text
-
-				if (track['\@attr'] && track['\@attr'].nowplaying !== '') { // if currently listening
-					element.innerHTML += userLink + 'currently listening to:</a> ';
-
-					// this works too, but the largest image is only 300px, so it's blurry :(
-					// if (imgURL !== '')
-						//$('body').css('background', "url('" + imgURL + "') no-repeat center/cover fixed");
-				} else
-					element.innerHTML += userLink + 'last listened to:</a> ';
-
-				// prints link to song with artist and song name
-				element.innerHTML += '<a href="' + songURL + '" title="' + albumName + '">' + artistName + ' &mdash; ' + songName + '</a> ';
-	         }
-	    }
-	};
-	xmlhttp.send(null); // Close connection
+// Search bars functionality
+function search(boxID,site) {
+		var box = document.getElementById(boxID);
+		if(site == 'google') {
+				window.location.href = 'http://www.google.com/search?q=+' + box.value;
+		}
+		else if (site == 'reddit') {
+			window.location.href = "https://reddit.com/r/" + box.value;
+		}
+		else if(site == 'chan') {
+			window.location.href = "https:/boards.4chan.org/" + box.value + "/";
+		}
 }
+
 
 // Initializes everything on page load
 $(function() {
@@ -151,4 +143,37 @@ $(function() {
 	$('#background').click(function() {
 		resetMousetraps();
 	});
+	// Search google functionality
+	document.getElementById('google-submit').onclick = function() {
+		search('google-input','google');
+		return false;
+	};
+	document.getElementById('google-input').onkeydown = function (event) {
+		if(event.keyCode == 13) {
+			search('google-input','google');
+			return false;
+		}
+	}
+	// Search reddit functionality
+	document.getElementById('reddit-submit').onclick = function() {
+		search('reddit-input','reddit');
+		return false;
+	};
+	document.getElementById('reddit-input').onkeydown = function (event) {
+		if(event.keyCode == 13) {
+			search('reddit-input','reddit');
+			return false;
+		}
+	}
+	// Search 4chan
+	document.getElementById('chan-submit').onclick = function() {
+		search('chan-input','chan');
+		return false;
+	};
+	document.getElementById('chan-input').onkeydown = function (event) {
+		if(event.keyCode == 13) {
+			search('chan-input','chan');
+			return false;
+		}
+	}
 });
