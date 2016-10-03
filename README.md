@@ -1,5 +1,5 @@
 # start [https://pschfr.github.io/start/](https://pschfr.github.io/start/)
-![https://pschfr.github.io/start/](https://imgur.com/gallery/FtB1Z7b)
+![https://imgur.com/gallery/FtB1Z7b](https://imgur.com/gallery/FtB1Z7b)
 ## My own custom startpage forked from from this awesome original by [@pschfr](https://www.github.com/pschfr/start)
 
 ##Features:
